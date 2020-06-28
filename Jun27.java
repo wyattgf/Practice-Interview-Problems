@@ -23,22 +23,41 @@ class Solution {
 
     
     public int myAtoi(String str) {
+         
         str = str.trim();
-        boolean neg = false;
-        StringBuilder st = new StringBuilder("");
-        for (char c: str.toCharArray()){
-            int as = (int) c;
-            if (as == 45 || as >=48 || as<=57) st.append(c);
-            if (as == 45) neg = true;
-        }
-        try{
-            return Integer.valueOf(st.toString());
-        }
-        catch(Exception e){
-            int res = neg ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-            return res;
-        }
-    }
+        if (str.length() == 0) return 0;
+        
+       StringBuilder sb = new StringBuilder("");
+       boolean neg = false;
+       int count = 0;
+       
+       char c = str.charAt(0);
+        
+       if(c == '-' || c == '+'){
+         count++;  
+       } 
+       
+        
+       for (int i = count; i<str.length(); i++){
+           if (str.charAt(i) >= '0' && str.charAt(i) <='9') sb.append(str.charAt(i));
+           else break;
+        
+        
+       }
+        
+       if (sb.length() == 0) return 0;
+        
+       Double val = Double.parseDouble(sb.toString());
+        
+       if (c == '-'){
+          val= val * -1; 
+       }
+        
+       if(val > Integer.MAX_VALUE) return Integer.MAX_VALUE;    
+       else if (val < Integer.MIN_VALUE) return Integer.MIN_VALUE*-1;
+        
+       return (int) Math.round(val);
+   }
     
 
 
